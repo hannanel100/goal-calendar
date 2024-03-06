@@ -7,9 +7,6 @@ export default function Month({
 }>) {
   const daysInMonth = new Date(value, value + 1, 0).getDate();
   const year = new Date().getFullYear();
-  console.log("🚀 ~ year:", year);
-  console.log("value: ", value);
-  console.log("🚀 ~ daysInMonth:", daysInMonth);
 
   return (
     <div className="flex flex-col gap-2">

@@ -5,50 +5,40 @@ import { tv } from "tailwind-variants";
 
 export default function Day({ value }: Readonly<{ value: number }>) {
   const [on, setOn] = useState(false);
-  const span = tv({
-    base: "text-inherit font-bold text-2xl",
+  const hexagon = tv({
+    base: "hexagon absolute inset-0 m-auto flex items-center justify-center text-2xl font-bold cursor-pointer",
+  });
+  const innerHexagon = tv({
+    extend: hexagon,
+    base: "scale-75 group-hover:bg-yellow-300 group-hover:text-amber-800 font-bold transition-colors duration-100",
     variants: {
       on: {
-        true: "text-black",
-        false: "text-inherit font-bold text-2xl",
+        true: "bg-yellow-300 text-amber-800",
+        false: "bg-amber-800  text-yellow-300",
       },
+    },
+    defaultVariants: {
+      on: false,
+    },
+  });
+  const outerHexagon = tv({
+    extend: hexagon,
+    base: " group-hover:text-yellow-300 transition-colors duration-100",
+    variants: {
+      on: {
+        true: "bg-amber-800  ",
+        false: "bg-yellow-300 ",
+      },
+    },
+    defaultVariants: {
+      on: false,
     },
   });
   return (
-    <div className="flex">
-      <div
-        className="w-0 h-0 
-  border-t-[32px] border-t-transparent
-  border-r-[18px] border-r-white
-  border-b-[32px] border-b-transparent"
-      ></div>
-      <button
-        className={`
-        flex
-        w-16
-        h-16
-        items-center
-        justify-center
-        bg-black
-        border-2
-        border-white
-        border-r-transparent
-        border-l-transparent
-        duration-200
-        ease-in-out 
-        ${on ? "bg-white" : "hover:bg-white hover:text-black"}
-        
-      `}
-        onClick={() => setOn(!on)}
-      >
-        <span className={span({ on: on })}>{value}</span>
-      </button>
-      <div
-        className="w-0 h-0 
-  border-t-[32px] border-t-transparent
-  border-l-[18px] border-l-white
-  border-b-[32px] border-b-transparent"
-      ></div>
+    <div className="group relative h-10 w-10" onClick={() => setOn(!on)}>
+      <div className={outerHexagon({ on })}></div>
+      {/* Inner hexagon */}
+      <div className={innerHexagon({ on })}>{value}</div>
     </div>
   );
 }
